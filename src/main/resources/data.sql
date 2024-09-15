@@ -19,3 +19,5 @@ INSERT INTO order_item (id, order_id, product_id, amount, total) VALUES
 (3, 1, 3, 1, 150.0),
 (4, 2, 4, 2, 190.0),
 (5, 2, 5, 1, 175.0);
+
+INSERT INTO users (username, password, role) VALUES ('admin', 'admin', 'ADMIN');

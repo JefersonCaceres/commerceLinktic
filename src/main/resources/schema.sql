@@ -23,5 +23,10 @@ CREATE TABLE order_item (
     FOREIGN KEY (order_id) REFERENCES orders(id),
     FOREIGN KEY (product_id) REFERENCES product(id)
 );
+CREATE TABLE IF NOT EXISTS users (
+    username VARCHAR(50) PRIMARY KEY,
+    password VARCHAR(255),
+    role VARCHAR(50)
+);
 
 
