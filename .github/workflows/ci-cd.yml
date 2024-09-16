@@ -34,5 +34,4 @@ jobs:
       run: mvn package
 
     - name: Deploy
-      run: echo "Deploy step: Implement deployment script here"
-
+      run: echo "Deploy step:Implementdeployment script here"
