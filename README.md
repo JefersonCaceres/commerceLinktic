@@ -96,3 +96,10 @@ En el proyecto Commerce, la base de datos se inicializa automáticamente en cada
    *    data.sql
     -   El archivo data.sql contiene datos de ejemplo (productos, órdenes, ítems de órdenes y usuarios) que son insertados automáticamente cada vez que la aplicación se despliega. Esto es útil para pruebas y desarrollo, ya que proporciona un conjunto básico de datos con los que trabajar desde el primer momento.
 
+# 8. Pipeline de Integración Continua (CI-CD) con GitHub Actions
+
+*   En el proyecto Commerce, se ha configurado un pipeline de integración continua utilizando GitHub Actions. Este pipeline automatiza el proceso de compilación, ejecución de pruebas y despliegue para garantizar que el código que se integra al repositorio esté en buen estado y cumpla con los estándares de calidad.
+
+    #   7.1. Descripción del Pipeline
+
+      *  El pipeline de GitHub Actions se define en el archivo .github/workflows/ci-cd.yml dentro del repositorio del proyecto. Este archivo especifica los pasos que se ejecutan en el pipeline cada vez que se realiza un push o una solicitud de pull request al repositorio principal.
