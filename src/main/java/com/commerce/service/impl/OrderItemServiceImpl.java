@@ -1,6 +1,7 @@
 package com.commerce.service.impl;
 
 import com.commerce.entity.OrderItem;
+import com.commerce.error.Errors;
 import com.commerce.mapper.OrderItemMapper;
 import com.commerce.model.OrderItemDto;
 import com.commerce.repository.OrderItemRepository;
@@ -27,6 +28,9 @@ public class OrderItemServiceImpl implements OrderItemService {
     }
     @Override
     public OrderItemDto save(OrderItemDto orderItemDto) {
+        if (orderItemRepository.existsById(orderItemDto.getId())) {
+            throw new Errors("OrderItem already exists with id: " + orderItemDto.getId());
+        }
         OrderItem orderItem = orderItemMapper.toEntity(orderItemDto);
         OrderItem savedOrderItem = orderItemRepository.save(orderItem);
         return orderItemMapper.toDto(savedOrderItem);
@@ -37,14 +41,14 @@ public class OrderItemServiceImpl implements OrderItemService {
     public OrderItemDto findById(int id) {
         Optional<OrderItem> orderItemOptional = orderItemRepository.findById(id);
         return orderItemOptional.map(orderItemMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
+                .orElseThrow(() -> new Errors("OrderItem not found"));
     }
 
     // Actualizar un OrderItem existente
     @Override
     public OrderItemDto update(int id, OrderItemDto orderItemDto) {
         OrderItem existingOrderItem = orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
+                .orElseThrow(() -> new Errors("OrderItem not found"));
 
         existingOrderItem.setAmount(orderItemDto.getAmount());
         existingOrderItem.setTotal(orderItemDto.getTotal());
@@ -60,7 +64,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     @Override
     public void deleteById(int id) {
         orderItemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("OrderItem not found"));
+                .orElseThrow(() -> new Errors("OrderItem not found"));
         orderItemRepository.deleteById(id);
     }
 }

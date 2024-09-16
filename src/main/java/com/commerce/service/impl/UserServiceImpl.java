@@ -1,6 +1,7 @@
 package com.commerce.service.impl;
 
 import com.commerce.entity.Users;
+import com.commerce.error.Errors;
 import com.commerce.mapper.UserMapper;
 import com.commerce.model.UserDto;
 import com.commerce.repository.UserRepository;
@@ -36,13 +37,13 @@ public class UserServiceImpl implements UserService {
     public UserDto findUserName(String username) {
         return userRepository.findById(username)
                 .map(userMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new Errors("User not found"));
     }
 
     @Override
     public UserDto update(String username, UserDto userDto) {
         Users user = userRepository.findById(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new Errors("User not found"));
 
         user.setPassword(userDto.getPassword());
         user.setRole(userDto.getRole());
@@ -53,6 +54,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(String username) {
+        userRepository.findById(username)
+                .orElseThrow(() -> new Errors("User not found"));
         userRepository.deleteById(username);
     }
 }

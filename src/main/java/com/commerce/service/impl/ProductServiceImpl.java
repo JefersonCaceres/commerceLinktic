@@ -1,6 +1,7 @@
 package com.commerce.service.impl;
 
 import com.commerce.entity.Product;
+import com.commerce.error.Errors;
 import com.commerce.mapper.ProductMapper;
 import com.commerce.model.ProductDto;
 import com.commerce.repository.ProductRepository;
@@ -38,14 +39,14 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto findId(int id){
         Optional<Product> products = productRepository.findById(id);
         return products.map(productMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new Errors("Product not found"));
     }
 
     // Método para actualizar un producto
     @Override
     public ProductDto update(int id, ProductDto productDto) {
         Product existingProduct = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new Errors("Product not found"));
 
         existingProduct.setName(productDto.getName());
         existingProduct.setCost(productDto.getCost());
@@ -59,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void delete(int id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new Errors("Product not found"));
 
         productRepository.delete(product);
     }
