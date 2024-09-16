@@ -1,6 +1,7 @@
 package com.commerce.service.impl;
 
 import com.commerce.entity.Orders;
+import com.commerce.error.Errors;
 import com.commerce.mapper.OrderItemMapper;
 import com.commerce.mapper.OrdersMapper;
 import com.commerce.model.OrdersDto;
@@ -33,7 +34,7 @@ public class OrdersServiceImpl implements OrdersService {
     public OrdersDto findById(int id) {
         Optional<Orders> ordersOptional = ordersRepository.findById(id);
         return ordersOptional.map(ordersMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new Errors("Order not found"));
     }
 
     @Override
@@ -46,7 +47,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public OrdersDto update(int id, OrdersDto ordersDto) {
         Orders existingOrders = ordersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new Errors("Order not found"));
 
         existingOrders.setOrder_date(ordersDto.getOrder_date());
         existingOrders.setTotal(ordersDto.getTotal());
@@ -61,7 +62,7 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public void deleteById(int id) {
         Orders existingOrders = ordersRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Order not found"));
+                .orElseThrow(() -> new Errors("Order not found"));
 
         ordersRepository.deleteById(id);
     }
